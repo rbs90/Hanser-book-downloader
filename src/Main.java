@@ -17,14 +17,24 @@ import java.util.ArrayList;
  * To change this template use File | Settings | File Templates.
  */
 public class Main {
-
-
+    
+    static private Boolean cmdLine = false;
 
     public static void main(String[] args) throws IOException {
 
         ArrayList<String> files = new ArrayList<String>();
 
-        String url = JOptionPane.showInputDialog(null, "URL?", "Hanser book downloader", JOptionPane.QUESTION_MESSAGE);
+		if(args.length > 0)
+			cmdLine = true;
+
+		String url = "";
+
+        if(!cmdLine) {
+			url = JOptionPane.showInputDialog(null, "URL?", "Hanser book downloader", JOptionPane.QUESTION_MESSAGE);
+		} else {
+			url = args[0];
+		}
+
         Document doc = Jsoup.connect(url)
                 .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
                 .get();
@@ -58,8 +68,9 @@ public class Main {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
 
-
-        JOptionPane.showMessageDialog(null, "Book download was successfull.", "Hanser book downloader", JOptionPane.PLAIN_MESSAGE);
+		if(!cmdLine)
+	        JOptionPane.showMessageDialog(null, "Book download was successfull.", "Hanser book downloader", JOptionPane.PLAIN_MESSAGE);
+		System.out.println("Book download was successfull.");
 
     }
 }
